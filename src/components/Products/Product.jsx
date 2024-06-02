@@ -7,10 +7,19 @@ const Product = () => {
   const dispatch = useDispatch();
   const addtocart = (item) => {
     dispatch(addItem(item));
+
+     // Update cart count in local storage
+    localStorage.setItem("cartCount", cartCount + 1);
+    setCartCount(cartCount + 1); // Update the cart count in component state
   };
 
   useEffect(() => {
     dispatch(getItems());
+
+     const storedCartCount = localStorage.getItem("cartCount");
+    if (storedCartCount) {
+      setCartCount(parseInt(storedCartCount, 10));
+    }
   }, []);
 
   if (status === "loading") {
